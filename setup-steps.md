@@ -2,7 +2,7 @@
 
 Set the IP address of the machine that is running the docker container
 ```
-export IP=172.20.10.11
+export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
 ```
 
 For x11 visualizations:
