@@ -14,10 +14,13 @@
 - Misunderstandings about what ROS2 does and how Kaia fits in
     - I thought ROS2 let you do high level robot actions, but it is actually for coordinating low level things
     - I thought Kaia just enabled the setup and network connection, but it is actually the thing that allows the high level commands to be orchestrated (the commands just happen to start with `ros2`, but Kaia is doing all the implementation work)
+- Rishi learned how to connect the frontend to a backend (help from Copilot)
+    - python + flask
+    - he has previous experience with making frontends, but Copilot made it go really fast
 - How can we have multiple developers testing out the robot, when some have Macbook, some have Windows
     - fortunately the kaia.ai platform used a docker image, but that comes with tricky setup steps and makes debugging more tedious
 - How can we have multiple developers testing out the robot, while we only have one robot?
-    - The open source projects (kaia.ai) have simulators, but it isn't working through docker for us yet
+    - The open source projects (kaia.ai) have simulators, but it isn't working through docker for us yet (Zaid tried a bunch with help from Copilot)
 - It randomly fails to connect to WiFi (hotspot from iPhone)
     - visible symptom - blinking white light
     - debug (both options require you have to remove the LiDAR sensor)
