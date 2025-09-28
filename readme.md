@@ -1,4 +1,4 @@
-# Robo-Teach
+# RoboTeach
 
 An educational robotics platform using the MakersPet robot with ROS2 to create interactive learning experiences for children. This project aims to make robotics accessible for educational activities that improve spatial reasoning, creativity, persistence, and problem-solving skills.
 
@@ -17,6 +17,10 @@ The platform targets key learning outcomes:
 - **Perseverance**: Debugging and problem-solving with robotics
 - **Creativity**: Designing custom robot behaviors and activities  
 - **Sequencing**: Programming logical command sequences
+
+## See Also
+
+We also have a Google Drive folder, [here](https://drive.google.com/drive/u/0/folders/1A6fvU7hGU-ppixGU_70DXUyl0i8Rt296)
 
 ## 🚀 Getting Started
 
