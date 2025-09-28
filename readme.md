@@ -78,7 +78,7 @@ If you robot is already connected to a WiFi network, you can start here:
 
 5. **Test basic movement:**
    ```bash
-   bash move-forward.sh
+   bash backend/move-forward.sh
    ```
 
 ### Additional Terminal Access
@@ -113,7 +113,9 @@ The LiDAR transforms abstract spatial concepts into concrete, visual experiences
 ├── readme.md                           # This file
 ├── setup-steps.md                      # Detailed setup instructions
 ├── challenges-and-learnings.md         # Development issues and solutions  
-├── move-forward.sh                     # Basic robot movement script
+├── backend/                            # Backend server and robot control scripts
+│   └── move-forward.sh                 # Basic robot movement script
+├── frontend/                           # Frontend web interface (planned)
 ├── ideation/                           # Project planning and brainstorming
 │   ├── proposal.md                     # Original hackathon proposal
 │   ├── design-decisions.md             # Educational philosophy and technical approach
