@@ -18,9 +18,15 @@
     - fortunately the kaia.ai platform used a docker image, but that comes with tricky setup steps and makes debugging more tedious
 - How can we have multiple developers testing out the robot, while we only have one robot?
     - The open source projects (kaia.ai) have simulators, but it isn't working through docker for us yet
-- It randomly doesn't connect to wifi
-    - debug - connect via cable and use Arduino serial monitor
-        - you have to remove the LiDAR sensor to connect the cable
+- It randomly fails to connect to WiFi (hotspot from iPhone)
+    - visible symptom - blinking white light
+    - debug (both options require you have to remove the LiDAR sensor)
+        - view logs - connect via cable and use Arduino serial monitor 
+        - switch WiFi network - restart and press and hold "boot" button within 1 second of starting, then go to local network web UI - `192.168.4.1`
+    - try turning off+on the hotspot (a.k.a. restart your router), then reboot the robot
+    - the ros2 launch command can sit there waiting for a connection
+    - when it works, there will be noticeable output from the launch command, and the LiDAR will start spinning
+- You can't reprogram the WiFi connection without taking off the LiDAR sensor
 - How can we use data that is available via ROS2 and kaiai.ai, in a AR app?
     - We could put two QR codes on the robot to help anchor the 3D scene in coordinates relative to the robot
     - AR would let the robot take different visual forms, and move its arms to point to things as part of the game/activity
@@ -34,3 +40,4 @@
 ## General Learnings
 
 - It really helps to organize your planning and assumptions into documents, and then feed it into generative AI to help brainstorm (I should have done that earlier, it was really hard to explain what I was thinking)
+- It was hard to debug ROS2 actions that are not working as expected
