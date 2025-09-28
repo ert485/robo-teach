@@ -14,23 +14,23 @@ if ! ros2 topic list | grep -q "/cmd_vel"; then
     echo "Warning: /cmd_vel topic not found. Make sure the robot is running."
 fi
 
-echo "Moving robot forward for 1 second..."
-
 # More robust approach: Wait for subscribers first, then publish
 echo "Waiting for /cmd_vel subscribers..."
 
 # Check for subscribers in a loop (max 10 seconds)
-for i in {1..20}; do
+for i in {1..10}; do
     SUBSCRIBER_COUNT=$(ros2 topic info /cmd_vel | grep "Subscription count:" | grep -o '[0-9]*')
     if [ "$SUBSCRIBER_COUNT" -gt 0 ]; then
         echo "Found $SUBSCRIBER_COUNT subscriber(s), starting movement..."
         break
     fi
-    if [ $i -eq 20 ]; then
-        echo "Warning: No subscribers found after 10 seconds, trying anyway..."
+    if [ $i -eq 10 ]; then
+        echo "Warning: No subscribers found after 5 seconds, trying anyway..."
     fi
     sleep 0.5
 done
+
+echo "Moving robot forward for 1 second..."
 
 # Now publish with confidence that subscribers exist
 ros2 topic pub /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.1, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}" --rate 5 &
