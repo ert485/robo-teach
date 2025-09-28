@@ -148,6 +148,48 @@ This platform has a vision to enable various educational activities:
 - **Maze Runner**: Problem-solving through obstacle navigation
 - **Pet Follower**: Robot learns to follow and interact with children
 
+## 🚧 Planned Architecture (In Development)
+
+### Frontend Game Interface
+A child-friendly web interface that will allow students to:
+- Select and configure educational games/activities
+- Monitor robot status and sensor data in real-time
+- Manually control robot movement
+- View SLAM mapping and navigation progress
+- Track learning progress and achievements
+
+### Robot Control Server
+A middleware server that bridges the frontend interface with ROS2/Kaia.ai commands:
+
+**Core Features (Planned):**
+- **API Endpoints**: RESTful API for robot control actions
+- **Real-time Communication**: WebSocket server for live robot status updates
+- **Game Logic**: Server-side game state management and rules enforcement
+
+**Technical Architecture:**
+```
+Frontend (React) ↔ WebSocket/HTTP ↔ Control Server ↔ ROS2/Docker Container ↔ Robot
+```
+
+**Planned API Endpoints:**
+```
+POST /api/robot/move          # Send movement commands
+GET  /api/robot/status        # Get current robot state
+GET  /api/robot/map           # Get SLAM mapping data
+POST /api/game/start          # Initialize game session
+GET  /api/game/progress       # Get current game state
+POST /api/emergency-stop      # Immediate robot halt
+```
+
+**Current Status:**
+- ✅ Basic ROS2 robot communication established
+- 🚧 Server architecture in design phase
+- 🚧 Frontend mockups and wireframes in progress
+- ⏳ WebSocket real-time communication planned
+- ⏳ Game-specific APIs to be implemented
+
+This architecture will abstract the complexity of ROS2 commands into simple, educational game interfaces that children can easily understand and interact with.
+
 ## 🤝 Contributing
 
 This project welcomes contributions! Areas where help is needed:
