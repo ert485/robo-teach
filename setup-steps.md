@@ -12,9 +12,10 @@ add your IP address to the access control list
 
 Start the docker container:
 ```
-docker run --platform linux/amd64 --name makerspet -it --rm -v ~/maps:/maps \
+docker run --platform linux/amd64 --name makerspet -it --rm -v ~/maps:/maps -v $(pwd):/workspace \
   -p $IP:8888:8888/udp \
   -p 4430:4430/tcp \
+  -p 5001:5001/tcp \
   -e DISPLAY=$IP:0 -e LIBGL_ALWAYS_INDIRECT=0 \
   kaiaai/kaiaai:iron
 ```
@@ -28,3 +29,7 @@ Initialize the bot communication:
 `ros2 run kaiaai_teleop teleop_keyboard`
 
 `bash move-forward.sh`
+
+## Initialize the python interface:
+
+`pip install -r /workspace/requirements.txt && python3 /workspace/app.py`
