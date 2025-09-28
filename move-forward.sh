@@ -1,6 +1,8 @@
 #!/bin/bash
 # Move the robot forward for 1 second
 
+echo "Starting move-forward script..."
+
 # Check if ROS2 is available
 if ! command -v ros2 &> /dev/null; then
     echo "Error: ros2 command not found. Make sure ROS2 is installed and sourced."
