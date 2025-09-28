@@ -1,12 +1,12 @@
 # RoboTeach
 
-A proposed educational robotics platform using the MakersPet robot with ROS2 to create interactive learning experiences for children. This project aims to make robotics accessible for educational activities that improve spatial reasoning, creativity, persistence, and problem-solving skills.
+A proposed educational robotics platform using MakersPet / Kaia.ai robots to create interactive learning experiences for children. This project aims to make robotics accessible for educational activities that improve spatial reasoning, creativity, persistence, and problem-solving skills.
 
 NOTE - this project is in very early stages, most of the things described are planned features, not working code
 
 ## 🤖 About the Project
 
-This repository contains the setup, scripts, and documentation for controlling a MakersPet robot through ROS2 commands. The robot features:
+This repository contains the setup, scripts, and documentation for controlling a MakersPet robot through ROS2 / Kaia.ai platform. The robot features:
 - 120mm round differential drive base
 - 360° 2D LiDAR sensor for mapping and navigation
 - ESP32 development board
