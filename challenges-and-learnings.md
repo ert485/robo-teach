@@ -30,3 +30,7 @@
     - Generative AI made amazing suggestions of what sorts of games lead to each learning outcomes
         - https://claude.ai/share/3f0bd4db-ccf9-47d3-a53d-13335e2c7502
 
+
+## General Learnings
+
+- It really helps to organize your planning and assumptions into documents, and then feed it into generative AI to help brainstorm (I should have done that earlier, it was really hard to explain what I was thinking)
