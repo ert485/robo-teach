@@ -247,7 +247,7 @@ A middleware server that bridges the frontend interface with ROS2/Kaia.ai comman
 
 **Technical Architecture:**
 ```
-Frontend (React) ↔ WebSocket/HTTP ↔ Control Server ↔ ROS2/Docker Container ↔ Robot
+Frontend ↔ HTTP/WebSocket ↔ Control Server ↔ ROS2/Docker Container ↔ Robot
 ```
 
 **Planned API Endpoints:**
