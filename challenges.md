@@ -9,9 +9,12 @@
     - possible cause - Packets are reportedly getting lost
     - investigate/research - to figure out how nodes and topics work in ROS2
     - debug - is there a way to debug topics, to tell where it is failing? An "Explorer" UI like the one Zaid had used for mqtt topics
+        - Foxglove is a robotics studio, Claude thinks it would have things like that
     - alternatives - what are `ros2 service` and `ros2 action`, and are they more reliable than `ros2 topic`?
 - How can we use data that is available via ROS2 and kaiai.ai, in a AR app?
+- What games or activities would be best for this kind of robot?
+    - Cira 
 - How can we have multiple developers testing out the robot, when some have Macbook, some have Windows
     - fortunately the kaia.ai platform used a docker image, but that comes with tricky steps needed
 - How can we have multiple developers testing out the robot, while we only have one robot?
-    - The open source projects (kaia.ai) have simulators, but it isn't working through docker
+    - The open source projects (kaia.ai) have simulators, but it isn't working through docker for us yet
