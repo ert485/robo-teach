@@ -17,6 +17,8 @@
 - Rishi learned how to connect the frontend to a backend (help from Copilot)
     - python + flask
     - he has previous experience with making frontends, but Copilot made it go really fast
+- Running bash commands in python is messy
+    - I think there are python libraries that we can use directly, but bash was good for a hackathon so we only need to learn one SDK
 - How can we have multiple developers testing out the robot, when some have Macbook, some have Windows
     - fortunately the kaia.ai platform used a docker image, but that comes with tricky setup steps and makes debugging more tedious
 - How can we have multiple developers testing out the robot, while we only have one robot?
