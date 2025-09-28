@@ -10,11 +10,22 @@ import shutil
 import subprocess
 import re
 from typing import Optional
+import logging
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key'
 # Use threading async mode to avoid eventlet/gevent requirements
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(),  # Console output
+    ]
+)
+logger = logging.getLogger(__name__)
 
 # Robot state
 robot_state = {
@@ -77,22 +88,27 @@ class RobotSimulator:
             time.sleep(0.1)
     
     def move_forward(self, speed=1.0):
+        logger.info(f"Robot simulator: Moving forward with speed {speed}")
         self.speed = speed
         robot_state['status'] = 'moving_forward'
     
     def move_backward(self, speed=1.0):
+        logger.info(f"Robot simulator: Moving backward with speed {speed}")
         self.speed = -speed
         robot_state['status'] = 'moving_backward'
     
     def turn_left(self):
+        logger.info("Robot simulator: Turning left")
         self.position['angle'] -= 5
         robot_state['status'] = 'turning_left'
     
     def turn_right(self):
+        logger.info("Robot simulator: Turning right")
         self.position['angle'] += 5
         robot_state['status'] = 'turning_right'
     
     def stop(self):
+        logger.info("Robot simulator: Stopping")
         self.speed = 0
         robot_state['status'] = 'idle'
 
@@ -108,12 +124,16 @@ def _ros2_is_available():
     Returns a tuple (available: bool, setup_bat: Optional[str]).
     On Windows, you can set env var ROS2_SETUP_BAT to the full path of local_setup.bat.
     """
+    logger.debug("Checking if ROS2 is available")
     setup_bat = os.environ.get('ROS2_SETUP_BAT')
     if shutil.which('ros2'):
+        logger.info("ROS2 found in PATH")
         return True, setup_bat
     # If ros2 not on PATH but setup_bat provided, we can still run via `call setup && ros2 ...`
     if setup_bat and os.path.exists(setup_bat):
+        logger.info(f"ROS2 setup batch file found at: {setup_bat}")
         return True, setup_bat
+    logger.info("ROS2 not available")
     return False, None
 
 
@@ -218,12 +238,15 @@ def index():
 @app.route('/api/connect', methods=['POST'])
 def connect_robot():
     """Connect to the robot (simulated)"""
+    logger.info("API: Connect robot request received")
     try:
         robot_state['connected'] = True
         robot_state['status'] = 'connected'
         robot_sim.start_simulation()
+        logger.info("Robot connected and simulation started")
         return jsonify({'success': True, 'message': 'Robot connected successfully'})
     except Exception as e:
+        logger.error(f"Failed to connect robot: {e}")
         return jsonify({'success': False, 'message': str(e)})
 
 @app.route('/api/disconnect', methods=['POST'])
@@ -245,58 +268,81 @@ def get_status():
 @app.route('/api/control/<action>', methods=['POST'])
 def control_robot(action):
     """Control robot movements"""
+    logger.info(f"API: Control robot action '{action}' requested")
+    
     if not robot_state['connected']:
+        logger.warning(f"Control action '{action}' failed - robot not connected")
         return jsonify({'success': False, 'message': 'Robot not connected'})
+    
+    logger.info(f"Robot is connected, processing action: {action}")
     
     try:
         if action == 'forward':
+            logger.info("Processing FORWARD command")
             # Try real ROS2 move for 1 second; fallback to simulator if not available
             available, setup_bat = _ros2_is_available()
             if available:
+                logger.info("ROS2 available - sending ROS2 command")
                 def _run_move():
+                    logger.info("Starting ROS2 move thread")
                     res = _publish_cmd_vel_for_duration(0.1, 0.0, duration_sec=1.0, rate_hz=5, setup_bat=setup_bat)
+                    logger.info(f"ROS2 move completed: {res}")
                     # After move, reset sim state to idle (do not move sim)
                     robot_state['status'] = 'idle'
+                    logger.info("Robot status set to idle after ROS2 move")
                     socketio.emit('status_update', robot_state)
                 threading.Thread(target=_run_move, daemon=True).start()
                 robot_state['status'] = 'moving_forward'
+                logger.info("Forward command using ROS2 - thread started")
                 return jsonify({'success': True, 'message': 'ROS2: Moving forward for 1s', 'used_ros2': True})
             else:
+                logger.info("ROS2 not available - using simulator")
                 robot_sim.move_forward()
                 used_ros2 = False
         elif action == 'backward':
+            logger.info("Processing BACKWARD command")
             robot_sim.move_backward()
             used_ros2 = False
         elif action == 'left':
+            logger.info("Processing LEFT command")
             robot_sim.turn_left()
             used_ros2 = False
         elif action == 'right':
+            logger.info("Processing RIGHT command")
             robot_sim.turn_right()
             used_ros2 = False
         elif action == 'stop':
+            logger.info("Processing STOP command")
             # Also send ROS2 stop if available
             available, setup_bat = _ros2_is_available()
             if available:
+                logger.info("ROS2 available - sending ROS2 stop command")
                 def _run_stop():
                     try:
+                        logger.info("Executing ROS2 stop command")
                         _run_ros2_command(
                             'ros2 topic pub --once /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"',
                             setup_bat=setup_bat,
                             timeout=5
                         )
-                    except Exception:
-                        pass
+                        logger.info("ROS2 stop command completed")
+                    except Exception as e:
+                        logger.error(f"ROS2 stop command failed: {e}")
                 threading.Thread(target=_run_stop, daemon=True).start()
                 used_ros2 = True
             else:
+                logger.info("ROS2 not available - using simulator stop")
                 used_ros2 = False
             robot_sim.stop()
         else:
+            logger.warning(f"Unknown action requested: {action}")
             return jsonify({'success': False, 'message': 'Unknown action'})
         
         # For the forward action with ROS2 path we early-returned; the rest use used_ros2 variable
+        logger.info(f"Command '{action}' executed successfully, used_ros2: {locals().get('used_ros2', False)}")
         return jsonify({'success': True, 'message': f'Command {action} executed', 'used_ros2': locals().get('used_ros2', False)})
     except Exception as e:
+        logger.error(f"Error executing command '{action}': {e}")
         return jsonify({'success': False, 'message': str(e)})
 
 @app.route('/api/shutdown', methods=['POST'])
@@ -315,16 +361,19 @@ def shutdown_robot():
 
 @socketio.on('connect')
 def handle_connect():
+    logger.info('WebSocket: Client connected')
     print('Client connected')
     emit('status_update', robot_state)
 
 @socketio.on('disconnect')
 def handle_disconnect():
+    logger.info('WebSocket: Client disconnected')
     print('Client disconnected')
 
 @socketio.on('request_map_update')
 def handle_map_request():
     """Send current map data to client"""
+    logger.info('WebSocket: Map update requested')
     # Generate a simple map from LiDAR data
     map_points = []
     if robot_state['lidar_data']:
@@ -335,7 +384,10 @@ def handle_map_request():
             global_y = robot_pos['y'] + point['y']
             map_points.append({'x': global_x, 'y': global_y, 'type': 'obstacle'})
     
+    logger.info(f'WebSocket: Sending {len(map_points)} map points to client')
     emit('map_update', map_points)
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True, host='0.0.0.0', port=5000, allow_unsafe_werkzeug=True)
+    logger.info("Starting RoboTeach Flask application")
+    logger.info("Server will be available at http://0.0.0.0:5001")
+    socketio.run(app, debug=True, host='0.0.0.0', port=5001, allow_unsafe_werkzeug=True)
