@@ -193,8 +193,9 @@ This architecture will abstract the complexity of ROS2 commands into simple, edu
 ## 🤝 Contributing
 
 This project welcomes contributions! Areas where help is needed:
+- Implementing the planned architecture (see earlier section)
 - Educational activity development
-- Setup improvements
+- Setup instruction improvements
 - Robot simulation for development
 - Documentation and tutorials
 
