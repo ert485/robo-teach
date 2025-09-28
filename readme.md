@@ -1,6 +1,8 @@
 # RoboTeach
 
-An educational robotics platform using the MakersPet robot with ROS2 to create interactive learning experiences for children. This project aims to make robotics accessible for educational activities that improve spatial reasoning, creativity, persistence, and problem-solving skills.
+A proposed educational robotics platform using the MakersPet robot with ROS2 to create interactive learning experiences for children. This project aims to make robotics accessible for educational activities that improve spatial reasoning, creativity, persistence, and problem-solving skills.
+
+NOTE - this project is in very early stages, most of the things described are planned features, not working code
 
 ## 🤖 About the Project
 
@@ -25,6 +27,7 @@ We also have a Google Drive folder, [here](https://drive.google.com/drive/u/0/fo
 ## 🚀 Getting Started
 
 To initially program a robot, you will need to follow the instructions provided by Makerspet and Kaia.ai. 
+
 If you have a robot that is already assembled and programmed, complete the steps provided by Makerspet to connect the robot to the WiFi network that you will be using.
 
 If you robot is already connected to a WiFi network, you can start here:
