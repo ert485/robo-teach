@@ -84,6 +84,7 @@ If you robot is already connected to a WiFi network, you can start here:
    ```bash
    bash backend/move-forward.sh
    ```
+(See also [setup-steps.md](https://github.com/ert485/robo-teach/blob/main/setup-steps.md), for instructions that include a web control interface)
 
 ### Additional Terminal Access
 To run multiple terminals in the same Docker container:
