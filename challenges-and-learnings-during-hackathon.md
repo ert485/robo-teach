@@ -1,4 +1,4 @@
-# List of Challenges and Learnings
+# List of Challenges and Learnings During the Hackathon
 
 - The room was really cold (the AC is stuck on?)
     - Erik brought a heater
