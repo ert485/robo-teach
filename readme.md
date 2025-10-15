@@ -2,7 +2,9 @@
 
 A proposed educational robotics platform using MakersPet / Kaia.ai robots to create interactive learning experiences for children. This project aims to make robotics accessible for educational activities that improve spatial reasoning, creativity, persistence, and problem-solving skills.
 
-NOTE - this project is in very early stages, most of the things described are planned features, not working code
+NOTE - this project is in very early stages, most of the things described are planned features, not working code.
+
+The most significant outcome of the hackathon is what was learned. See [challenges-and-learnings-during-hackathon.md](https://github.com/ert485/robo-teach/blob/main/challenges-and-learnings-during-hackathon.md) for a summary.
 
 ## 🤖 About the Project
 
@@ -11,10 +13,12 @@ RoboTeach transforms learning through interactive robotics, helping children dev
 Our platform uses a MakersPet robot with advanced sensing capabilities to create engaging learning experiences where children don't just learn coding on a screen, but bring it to life through voice commands and physical interactions.
 
 ### Robot Hardware
+Purchased kit from Maker's Pet - [Arduino/ROS2 Self-Driving Robot 120mm Build Pack](https://makerspet.com/store#!/Arduino-ROS2-Self-Driving-Robot-120mm-Build-Pack/p/725772983)
+
 - 120mm round differential drive base with wheels
 - 360° 2D LiDAR sensor (LDROBOT LD14P) for mapping and navigation 
 - ESP32 microcontroller
-- Docker-based ROS2 environment for cross-platform compatibility
+- Connects to a computer that can host the Docker-based ROS2 environment
 
 ## 🎯 Educational Goals
 
